@@ -1,7 +1,5 @@
-
 from src import app
 from flask import render_template
-
 # home route for the app
 @app.route('/')
 @app.route('/homepage')
@@ -22,5 +20,11 @@ def contact():
 @app.route('/account')
 def account():
     return render_template('Account.html', title='Account')
-
-
+# Register the routes in the app
+@app.route('/register')
+def register():
+    return render_template('Register.html', title='Register')
+# Login the routes in the app
+@app.route('/login')
+def login():
+    return render_template('Login.html', title='Login')

@@ -10,7 +10,7 @@
     <!-- custom css file -->
     <link rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
     <title>{{ title }}</title>
-    {% extends "./layouts/navbar.html" %}
+    {% include "./layouts/navbar.html" %}
 </head>
 <body>
     {% block content %}
