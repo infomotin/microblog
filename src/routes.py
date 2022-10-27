@@ -1,5 +1,7 @@
 from src import app
 from flask import render_template
+from src.forms import RegistrationForm, LoginForm
+
 # home route for the app
 @app.route('/')
 @app.route('/homepage')
