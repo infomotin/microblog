@@ -23,10 +23,10 @@ def contact():
 def account():
     return render_template('Account.html', title='Account')
 # Register the routes in the app
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    return render_template('Register.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
 @app.route('/login')
 def login():

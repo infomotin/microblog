@@ -1,5 +1,6 @@
 {% extends 'layouts/layouts.html' %}
-{% block content %}
+{% block contentA %}
+
 <div class="container w-50">
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -7,7 +8,29 @@
             <legend>Join Today </legend>
             <div class="form-group">
                 {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.username.errors[0] }}
+                </div>
+                {% endif %}
+                
                 {{ form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
             </div>
 
         </fieldset>
@@ -15,4 +38,4 @@
     </form>
 </div>
 
-{% endblock content%}
+{% endblock contentA %}
