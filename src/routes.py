@@ -29,12 +29,18 @@ def account():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data, password=form.password.data)
-        # insert the user into the database
-        db.session.add(user)
-        db.session.commit()
-        flash(f'Account Create Sucssess {form.username.data}', category='success')
-        return redirect('login')
+        # to insert data into the database using try and except
+        try:
+            user = User(email=form.email.data,
+                        username=form.username.data, 
+                        password=form.password.data)
+            # insert the user into the database
+            db.session.add(user)
+            db.session.commit()
+            flash(f'Account Create Sucssess {form.username.data}', category='success')
+            return redirect('login')
+        except:
+            flash(f'Account Create Failed {form.username.data}', category='danger')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
 @app.route('/login', methods=['GET', 'POST'])
