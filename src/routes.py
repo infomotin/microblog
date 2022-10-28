@@ -1,6 +1,8 @@
-from src import app
+from src import app, db
+from flask import render_template, request, redirect, url_for
 from flask import render_template,redirect,flash
 from src.forms import RegistrationForm, LoginForm
+from src.models import User
 
 # home route for the app
 @app.route('/')
@@ -27,8 +29,11 @@ def account():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(
-            f'Account Create Sucssess {form.username.data}', category='success')
+        user = User(email=form.email.data, username=form.username.data, password=form.password.data)
+        # insert the user into the database
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account Create Sucssess {form.username.data}', category='success')
         return redirect('login')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app

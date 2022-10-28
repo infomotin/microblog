@@ -2,19 +2,32 @@ from flask import Flask
 # from flask_migrate import Migrate
 # import dataclasses as dc
 from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
-
+import pymysql
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'faequ227$_M'
-# sql alchemy database configuration with sqlite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/site.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False;
+# mysql connection
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/flask_db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 # with app.app_context():
-#     db.init_app(app)
 #     db.create_all()
-db.init_app(app)
-# migrate = Migrate(app, db)
+#     db.session.commit()
+# show all tables in the database
+def show_tables():
+    with app.app_context():
+        tables = db.engine.execute("SHOW TABLES;")
+        for table in tables:
+            print(table)
+            return tables
+# show all columns in a table in the database
+
+
+show_tables()
+# show all columns in a table
+
+
+
 from src import routes
 
-
- 
+# baghorbari
+# Kulsum123
+# 161235150480
