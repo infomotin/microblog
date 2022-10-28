@@ -24,6 +24,11 @@ def contact():
 @app.route('/account')
 def account():
     return render_template('Account.html', title='Account')
+
+
+
+
+
 # Register the routes in the app
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -51,7 +56,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         # now check if the user and password is in the database
         if user and user.password == form.password.data:
-            flash(f'Login sucssess {form.email.data}', category='success')
+            flash(f'Login sucssess {form.email.data}', category='success',)
             return redirect('account')
         else:
             flash(f'Login unsucssess {form.email.data}', category='danger')
