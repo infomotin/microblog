@@ -47,7 +47,10 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'motin@gmail.com' and form.password.data =="123456789":
+        # if the user is in the database 
+        user = User.query.filter_by(email=form.email.data).first()
+        # now check if the user and password is in the database
+        if user and user.password == form.password.data:
             flash(f'Login sucssess {form.email.data}', category='success')
             return redirect('account')
         else:
