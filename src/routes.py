@@ -27,7 +27,8 @@ def account():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account Create Sucssess {form.username.data}',category='sucssess')
+        flash(
+            f'Account Create Sucssess {form.username.data}', category='success')
         return redirect('login')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
@@ -36,9 +37,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         if form.email.data == 'motin@gmail.com' and form.password.data =="123456789":
-            flash(f'Login sucssess {form.username.data}', category='sucssess')
+            flash(f'Login sucssess {form.email.data}', category='success')
             return redirect('account')
         else:
-            flash(f'Login unsucssess {form.username.data}', category='danger')
+            flash(f'Login unsucssess {form.email.data}', category='danger')
             return redirect('register')
     return render_template('Login.html', title='Login',form=form)
