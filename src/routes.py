@@ -27,12 +27,15 @@ def account():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        return redirect('homepage')
+        return redirect('login')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect('account')
+        if form.email.data == 'motin@gmail.com' and form.password.data =="123456789":
+            return redirect('account')
+        else:
+            return redirect('register')
     return render_template('Login.html', title='Login',form=form)
