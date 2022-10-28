@@ -30,6 +30,9 @@ def register():
         return redirect('homepage')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('Login.html', title='Login')
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect('account')
+    return render_template('Login.html', title='Login',form=form)
