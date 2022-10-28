@@ -17,6 +17,11 @@
     {% include "./layouts/navbar.html" %}
   </head>
   <body>
+    <div class="container w-50">
+      {% with messages=get_flashed_messages(with_categories=true) %}
+      
+      {% endwith %}
+    </div>
     {% block contentA %}
     {% endblock contentA %}
     <!--  -->
