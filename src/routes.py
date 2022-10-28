@@ -1,5 +1,5 @@
 from src import app
-from flask import render_template
+from flask import render_template,redirect
 from src.forms import RegistrationForm, LoginForm
 
 # home route for the app
@@ -26,6 +26,8 @@ def account():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        return redirect('homepage')
     return render_template('register.html', title='Register', form=form)
 # Login the routes in the app
 @app.route('/login')

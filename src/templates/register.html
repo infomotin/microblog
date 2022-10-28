@@ -16,9 +16,8 @@
                 {% else %}
                 {{ form.username(class="form-control") }}
                 {% endif %}
-                
-
             </div>
+
             <div class="form-group">
                 {{ form.email.label(class="form-label") }}
                 {{ form.email(class="form-control") }}
@@ -32,12 +31,10 @@
                 {{ form.confirm_password(class="form-control") }}
             </div>
             <br>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-
         </fieldset>
-
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
     </form>
 </div>
 
