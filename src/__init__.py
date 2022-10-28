@@ -7,8 +7,6 @@ app.config['SECRET_KEY'] = 'faequ227$_M'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/site.db'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False;
 db = SQLAlchemy(app)
-
-
 from src import routes
 
 
