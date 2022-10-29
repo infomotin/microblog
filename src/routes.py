@@ -52,7 +52,7 @@ def login():
         # if the user is in the database 
         user = User.query.filter_by(email=form.email.data).first()
         # now check if the user and password is in the database
-        if user and user.password == form.password.data:
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             flash(f'Login sucssess {form.email.data}', category='success',)
             return redirect('account')
         else:
