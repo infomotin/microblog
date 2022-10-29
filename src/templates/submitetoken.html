@@ -1,0 +1,46 @@
+{% extends 'layouts/layouts.html' %}
+{% block contentA %}
+
+<div class="container w-50">
+    <form action="{{url_for('submitetoken')}}" method="post">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <legend>Submit Token</legend>
+            <div class="form-group">
+                {{ form.token.label(class="form-label") }}
+                {% if form.token.errors %}
+                {{ form.token(class="form-control is-invalid") }}
+                {% for error in form.token.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% else %}
+                {{ form.token(class="form-control") }}
+                {% endif %}
+            </div>
+
+            
+            <div class="form-group">
+            {{ form.password.label(class="form-label") }}
+            {% if form.password.errors %}
+            {{ form.password(class="form-control is-invalid") }}
+            {% for e in form.password.errors %}
+            <div class="invalid-feedback">{{ e }}</div>
+            {% endfor %}
+            {% else %}
+            {{ form.password(class="form-control") }}
+            {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            <br>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+            <a>Already have an account? <a href="{{ url_for('login') }}">Login</a></a>
+        </div>
+    </form>
+</div>
+
+{% endblock contentA %}

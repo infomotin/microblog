@@ -1,7 +1,7 @@
 from src import app, db, bcrypt
 from flask import render_template, request, redirect, url_for
 from flask import render_template,redirect,flash
-from src.forms import RegistrationForm, LoginForm,ReserPasswordForm
+from src.forms import RegistrationForm, LoginForm, ReserPasswordForm, ResetPasswordForm
 from src.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 # home route for the app
@@ -90,13 +90,20 @@ def resetpassword():
         email = User.query.filter_by(email=form.email.data).first()
         # if email is in the database
         if email:
+            form1 = ResetPasswordForm()
             flash(f'Send Password Reset Token Code On Your {form.email.data} address', category='success')
             # call a function to send the email
-            return redirect('login')
+            return render_template(template_name_or_list='submitetoken.html',form=form1)
         else:
             flash(message=f'Email {form.email.data} is not in the database', category='danger')
             return redirect('register')
     return render_template('resetpassword.html', title='Resetpassword', form=form)
+
+@app.route('/submitetoken',methods=['GET', 'POST'])
+def submitetoken():
+    if form.validate_on_submit():
+        print('hello');
+    return;
 
 
 @app.route('/logout')
