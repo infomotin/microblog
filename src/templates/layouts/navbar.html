@@ -28,9 +28,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('about') }}">About</a>
         </li>
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('account') }}">Account</a>
         </li>
+        {% endif %}
       </ul>
       <ul class="navbar-nav justify-content-end">
         {% if current_user.is_authenticated %}

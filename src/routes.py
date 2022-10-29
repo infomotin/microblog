@@ -25,6 +25,7 @@ def contact():
 
 #Account route for the app
 @app.route('/account')
+@login_required
 def account():
     isAuth = current_user.is_authenticated
     return render_template('Account.html', title='Account',isAuth=isAuth)
