@@ -1,7 +1,7 @@
 from src import app, db, bcrypt
 from flask import render_template, request, redirect, url_for
 from flask import render_template,redirect,flash
-from src.forms import RegistrationForm, LoginForm
+from src.forms import RegistrationForm, LoginForm,ReserPasswordForm
 from src.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 # home route for the app
@@ -78,6 +78,26 @@ def login():
             flash(f'Login unsucssess {form.email.data}', category='danger')
             return redirect('register')
     return render_template('Login.html', title='Login',form=form)
+
+
+@app.route('/resetpassword',methods=['GET', 'POST'])
+def resetpassword():
+    if current_user.is_authenticated:
+        flash( f'Your Are Alredey Login: {current_user.username}', category='info',)
+    form = ReserPasswordForm()
+    # if form.validate_on_submit():
+    if form.validate_on_submit():
+        email = User.query.filter_by(email=form.email.data).first()
+        # if email is in the database
+        if email:
+            flash(f'Send Password Reset Token Code On Your {form.email.data} address', category='success')
+            # call a function to send the email
+            return redirect('login')
+        else:
+            flash(message=f'Email {form.email.data} is not in the database', category='danger')
+            return redirect('register')
+    return render_template('resetpassword.html', title='Resetpassword', form=form)
+
 
 @app.route('/logout')
 def logout():
