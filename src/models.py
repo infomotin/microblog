@@ -1,11 +1,17 @@
 from src import db, login_manager, bcrypt, app
 from datetime import datetime
 from flask_login import UserMixin
+from flask import redirect, url_for, flash
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+# unathorized login handler
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('You are not authorized to view that page', category='danger')
+    return redirect(url_for('login'))
 
 
 # To make implementing a user class easier, you can inherit from UserMixin, which provides default implementations for all of these properties and methods. (It’s not required, though.)
