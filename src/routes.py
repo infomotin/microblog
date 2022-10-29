@@ -3,31 +3,42 @@ from flask import render_template, request, redirect, url_for
 from flask import render_template,redirect,flash
 from src.forms import RegistrationForm, LoginForm
 from src.models import User
-
+from flask_login import login_user, current_user, logout_user, login_required
 # home route for the app
 @app.route('/')
 @app.route('/homepage')
 def homepage():
-    return render_template('home.html', title='Home')
+    isAuth = current_user.is_authenticated
+    return render_template('home.html', title='Home', isAuth=isAuth)
 
 # about route for the app
 @app.route('/about')
 def about():
-    return render_template('About.html', title='About')
+    isAuth = current_user.is_authenticated
+    return render_template('About.html', title='About', isAuth=isAuth)
 
 # contact route for the app
 @app.route('/contact')
 def contact():
-    return render_template('contact.html', title='Contact')
+    isAuth = current_user.is_authenticated
+    return render_template('contact.html', title='Contact', isAuth=isAuth)
 
 #Account route for the app
 @app.route('/account')
 def account():
-    return render_template('Account.html', title='Account')
+    isAuth = current_user.is_authenticated
+    return render_template('Account.html', title='Account',isAuth=isAuth)
     
 # Register the routes in the app
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    isAuth = current_user.is_authenticated
+    print(isAuth)
+    # if user already login
+    if current_user.is_authenticated:
+        flash(
+            f'Your Are Alredey Login: {current_user.username}', category='info',)
+        return redirect(url_for('account'))
     form = RegistrationForm()
     if form.validate_on_submit():
         # to insert data into the database using try and except
@@ -43,19 +54,31 @@ def register():
             return redirect('login')
         except:
             flash(f'Account Create Failed {form.username.data}', category='danger')
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form, isAuth=isAuth)
 # Login the routes in the app
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # if user already login
+    if current_user.is_authenticated:
+        flash(f'Your Are Alredey Login: {current_user.username}', category='info',)
+        return redirect(url_for('account'))
     form = LoginForm()
     if form.validate_on_submit():
+        
         # if the user is in the database 
         user = User.query.filter_by(email=form.email.data).first()
         # now check if the user and password is in the database
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+            # impliment the login user
+            login_user(user)
             flash(f'Login sucssess {form.email.data}', category='success',)
             return redirect('account')
         else:
             flash(f'Login unsucssess {form.email.data}', category='danger')
             return redirect('register')
     return render_template('Login.html', title='Login',form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
