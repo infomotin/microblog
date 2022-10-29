@@ -1,4 +1,4 @@
-from src import app, db
+from src import app, db, bcrypt
 from flask import render_template, request, redirect, url_for
 from flask import render_template,redirect,flash
 from src.forms import RegistrationForm, LoginForm
@@ -31,10 +31,11 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         # to insert data into the database using try and except
+        encripted_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         try:
             user = User(email=form.email.data,
                         username=form.username.data, 
-                        password=form.password.data)
+                        password=encripted_password)
             # insert the user into the database
             db.session.add(user)
             db.session.commit()
