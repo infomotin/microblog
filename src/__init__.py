@@ -1,6 +1,7 @@
 from flask import Flask
 # from flask_migrate import Migrate
-# import dataclasses as dc
+# import bcrypt
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 app = Flask(__name__)

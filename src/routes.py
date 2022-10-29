@@ -24,11 +24,7 @@ def contact():
 @app.route('/account')
 def account():
     return render_template('Account.html', title='Account')
-
-
-
-
-
+    
 # Register the routes in the app
 @app.route('/register', methods=['GET', 'POST'])
 def register():

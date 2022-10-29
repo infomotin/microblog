@@ -12,7 +12,7 @@ class User(db.Model):
     date_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # return a string when we add a new user
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.date_created}')"
+        return f"User('{self.username}', '{self.email}', '{self.date_created.strftime('%d-%m-%Y, %H:%M:%S')}')"
     # constructor
     # def __init__(self, username, password, email, image):
     #     self.username = username
