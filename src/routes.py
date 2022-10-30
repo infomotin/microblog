@@ -4,6 +4,12 @@ from flask import render_template,redirect,flash
 from src.forms import RegistrationForm, LoginForm, ReserPasswordForm, ResetPasswordForm
 from src.models import User
 from flask_login import login_user, current_user, logout_user, login_required
+
+# jwt itsdangerous 
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
+
+
 # home route for the app
 @app.route('/')
 @app.route('/homepage')
@@ -78,6 +84,10 @@ def login():
             flash(f'Login unsucssess {form.email.data}', category='danger')
             return redirect('register')
     return render_template('Login.html', title='Login',form=form)
+# Send Email Function
+def send_reset_email(user):
+    # print(email)
+    pass
 
 
 @app.route('/resetpassword',methods=['GET', 'POST'])
@@ -90,10 +100,11 @@ def resetpassword():
         email = User.query.filter_by(email=form.email.data).first()
         # if email is in the database
         if email:
-            form1 = ResetPasswordForm()
+            # form1 = ResetPasswordForm()
             flash(f'Send Password Reset Token Code On Your {form.email.data} address', category='success')
             # call a function to send the email
-            return render_template(template_name_or_list='submitetoken.html',form=form1)
+            send_reset_email(email)
+            return redirect('login')
         else:
             flash(message=f'Email {form.email.data} is not in the database', category='danger')
             return redirect('register')
